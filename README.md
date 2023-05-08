@@ -1,1 +1,2 @@
 # BitClock
+An useful Readme 
