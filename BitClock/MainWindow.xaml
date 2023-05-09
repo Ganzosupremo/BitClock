@@ -3,10 +3,108 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BitClock"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:fam="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="BitClock" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" BorderThickness="1" Icon="{StaticResource Formula}" ResizeMode="CanMinimize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF59A7B1"/>
+            <GradientStop Color="#FF17164A" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="120"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="2" Width="700" Height="180" BorderThickness="6.9" CornerRadius="10">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                    <GradientStop Color="DodgerBlue" Offset="0.0"/>
+                    <GradientStop Color="Peru" Offset="0.69"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                        <GradientStop Color="BlueViolet" Offset="0.4"/>
+                        <GradientStop Color="DarkBlue" Offset="0.2"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Text="Block Id:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Grid.Row="1" Text="Previous Block Hash:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Grid.Row="2" Text="Height:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Grid.Row="3" Text="Timestamp:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Grid.Row="4" Text="Nonce:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Grid.Row="5" Text="Difficulty:" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" FontFamily="Times New Roman"/>
+
+                <TextBlock x:Name="IdText" Grid.Row="0" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman" Grid.ColumnSpan="2" Height="15" Margin="0,0,10,0"/>
+                <TextBlock x:Name="PreviousBlockhashText" Grid.Row="1" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman" Grid.ColumnSpan="2" Height="15" Margin="0,0,10,0"/>
+                <TextBlock x:Name="HeightText" Grid.Row="2" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock x:Name="TimestampText" Grid.Row="3" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock Name="NonceText" Grid.Row="4" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman"/>
+                <TextBlock x:Name="DifficultyText" Grid.Row="5" Grid.Column="1" Text="NA" Foreground="AntiqueWhite" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" FontFamily="Times New Roman"/>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="0" Width="1024" Height="60" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Content="Get Data" FontSize="16" FontWeight="Bold" FontFamily="Times New Roman" HorizontalAlignment="Center" Margin="290,0,0,0" Height="40" BorderThickness="1" Width="140" Click="Button_Click">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                        <GradientStop Color="#FF30C1D4" Offset="0.2"/>
+                        <GradientStop Color="#FF4C93CA" Offset="0.463"/>
+                        <GradientStop Color="#FF2C70BD" Offset="0.8"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.Setters>
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="Content" Value="CLICK ME!"/>
+                                </Trigger.Setters>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.Setters>
+                                    <Setter Property="Content" Value="CLICK ME!"/>
+                                </Trigger.Setters>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="Clear Data" FontSize="16" FontFamily="Times New Roman" FontWeight="Black" HorizontalAlignment="Center" Margin="120,0,60,0" Height="40" Width="140" Style="{StaticResource ButtonRound}" Click="Clear_Click">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                        <GradientStop Color="#FF30C1D4" Offset="0.2"/>
+                        <GradientStop Color="#FF4C93CA" Offset="0.463"/>
+                        <GradientStop Color="#FF2C70BD" Offset="0.8"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Width="1024" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label Content="Bitcoin's Blocks Data" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="32" FontFamily="Times New Roman" FontWeight="Bold"/>
+            <TextBlock Text="Press the button to get data about the latest block." Margin="0 5 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontFamily="Times New Roman" FontStyle="Italic" FontWeight="Heavy"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Width="1024" Orientation="Vertical" VerticalAlignment="Center">
+            <Image Source="{StaticResource Cancellor}" Width="330" Height="120"></Image>
+        </StackPanel>
     </Grid>
 </Window>

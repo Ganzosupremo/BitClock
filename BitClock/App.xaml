@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:BitClock"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary x:Uid="RD">
+            <BitmapImage x:Key="Cancellor" UriSource="Images/Cancellor.jpg"/>
+            <BitmapImage x:Key="Formula" UriSource="Images/Formula.png"/>
+            <Style x:Key="ButtonRound" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="6.9" Background="{TemplateBinding Background}" BorderThickness="0.69">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
