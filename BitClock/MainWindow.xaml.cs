@@ -1,4 +1,4 @@
-﻿using BitClock.Blockchain;
+﻿using BitClock.Bitcoin;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,29 +26,41 @@ namespace BitClock
     public partial class MainWindow : Window
     {
         private string _TipHash = string.Empty;
+        private Timer _Timer;
+        private int _IntervalMiliseconds = 600000;
+        private readonly List<TextBlock> TextList = new List<TextBlock>();
+        private DifficultyData _DifficultyWindow = new DifficultyData();
+        private PriceWindow _PriceWindow = new PriceWindow();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            PopulateList();
+
+            MakeAPIRequest();
+
+            _Timer = new Timer(_IntervalMiliseconds);
+            _Timer.Elapsed += Timer_Elapsed;
+            _Timer.Start();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+
+
+        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             _TipHash = await BitBlock.GetTipHash("https://mempool.space/api/blocks/tip/hash");
 
-            BitBlock block = await BitBlock.GetBlockAsync($"https://mempool.space/api/block/{_TipHash}");
+            BitBlock newBlock = await BitBlock.GetBlockAsync($"https://mempool.space/api/block/{_TipHash}");
 
-            SetTextBlocks(block);
+            MessageBox.Show($"Data Requested:\n {newBlock.Id}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            SetTextBlocks(newBlock);
         }
 
-        private void SetTextBlocks(BitBlock block)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            IdText.Text = block.Id;
-            PreviousBlockhashText.Text = block.Previousblockhash;
-            HeightText.Text = block.Height.ToString();
-            TimestampText.Text = block.Timestamp.ToString();
-            NonceText.Text = block.Nonce.ToString();
-            DifficultyText.Text = block.Difficulty.ToString();
+            MakeAPIRequest();
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -60,37 +73,66 @@ namespace BitClock
             DifficultyText.Text = "NA";
         }
 
-        private async UniTask MakeRequest(string url)
+        private void Difficulty_Click(object sender, RoutedEventArgs e)
         {
-            try
+            _DifficultyWindow.Show();
+            this.Close();
+        }
+
+        private async void MakeAPIRequest()
+        {
+            // Gets the hash of the tip chain block
+            _TipHash = await BitBlock.GetTipHash("https://mempool.space/api/blocks/tip/hash");
+
+            // Gets all the data from the tip block using the _TipHash
+            BitBlock block = await BitBlock.GetBlockAsync($"https://mempool.space/api/block/{_TipHash}");
+
+            // For Debugging purposes
+            //MessageBox.Show("Data Requested", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            SetTextBlocks(block);
+        }
+
+        private void PopulateList()
+        {
+            TextList.Add(IdText);
+            TextList.Add(PreviousBlockhashText);
+            TextList.Add(HeightText);
+            TextList.Add(TimestampText);
+            TextList.Add(NonceText);
+            TextList.Add(DifficultyText);
+        }
+
+        private void SetTextBlocks(BitBlock block)
+        {
+            ClearList();
+
+            Dispatcher.Invoke(() =>
             {
-                using (var client = new HttpClient())
+                IdText.Text = block.Id;
+                PreviousBlockhashText.Text = block.Previousblockhash;
+                HeightText.Text = block.Height.ToString();
+                TimestampText.Text = block.Timestamp.ToString();
+                NonceText.Text = block.Nonce.ToString();
+                DifficultyText.Text = block.Difficulty.ToString();
+            });
+        }
+
+        private void ClearList()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                foreach (var item in TextList)
                 {
-                    // Time to wait before the request timeouts
-                    client.Timeout = TimeSpan.FromMinutes(1);
-                    HttpResponseMessage message = await client.GetAsync(url);
-
-                    // Check the API response
-                    if (message.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        // Serialize the HTTP content to a string
-                        string ResponseString = await message.Content.ReadAsStringAsync();
-                        // Deserialize the response string
-                        //ExchangeRate ResponseObject = JsonConvert.DeserializeObject<ExchangeRate>(ResponseString);
-
-                        MessageBox.Show($"Request was succesfull: {ResponseString}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        // Return the API response
-                        //return ResponseObject;
-                    }
-                    //return exchangeRate;
+                    item.Text = "";
                 }
-            }
-            catch (Exception)
-            {
-                //return exchangeRate;
-                return;
-            }
+            });
+        }
+
+        private void Price_Click(object sender, RoutedEventArgs e)
+        {
+            _PriceWindow.Show();
+            this.Close();
         }
     }
 }

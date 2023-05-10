@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
 
-namespace BitClock.Blockchain
+namespace BitClock.Bitcoin
 {
     public class BitBlock
     {
@@ -66,6 +66,12 @@ namespace BitClock.Blockchain
             return 0;
         }
 
+        /// <summary>
+        /// Sends an API request to Mempool.space and gets the data about a block.
+        /// You need to specify the hash of the block, otherwise it wont work.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async UniTask<BitBlock> GetBlockAsync(string url)
         {
             BitBlock blockToReturn = new BitBlock();
@@ -94,6 +100,11 @@ namespace BitClock.Blockchain
             }
         }
 
+        /// <summary>
+        /// Sends an API request to Mempool.space and retrieves the hash of the chain tip block
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static async UniTask<string> GetTipHash(string url)
         {
             string stringToReturn = "";

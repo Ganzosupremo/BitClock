@@ -74,6 +74,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assets\Scripts\CoinPrice.cs" />
+    <Compile Include="Assets\Scripts\Difficulty.cs" />
+    <Compile Include="Assets\Windows\DifficultyAdjustment.xaml.cs">
+      <DependentUpon>DifficultyAdjustment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Windows\PriceWindow.xaml.cs">
+      <DependentUpon>PriceWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Assets\Windows\DifficultyAdjustment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -82,11 +94,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BitBlock.cs" />
+    <Compile Include="Assets\Scripts\BitBlock.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Assets\Windows\PriceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -115,12 +131,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\Cancellor.jpg" />
+    <Resource Include="Assets\Images\bitcoin-is-time.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Formula.png" />
+    <Resource Include="Assets\Images\Cancellor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Formula.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

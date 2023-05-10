@@ -5,8 +5,9 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary x:Uid="RD">
-            <BitmapImage x:Key="Cancellor" UriSource="Images/Cancellor.jpg"/>
-            <BitmapImage x:Key="Formula" UriSource="Images/Formula.png"/>
+            <BitmapImage x:Key="Cancellor" UriSource="Assets/Images/Cancellor.jpg"/>
+            <BitmapImage x:Key="Formula" UriSource="Assets/Images/Formula.png"/>
+            <BitmapImage x:Key="BitcoinIsTime" UriSource="Assets/Images/bitcoin-is-time.jpg"/>
             <Style x:Key="ButtonRound" TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -17,6 +18,11 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="FontSize" Value="24"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

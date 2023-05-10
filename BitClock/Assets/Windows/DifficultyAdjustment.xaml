@@ -1,0 +1,144 @@
+﻿<Window x:Class="BitClock.DifficultyData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BitClock" xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="DifficultyAdjustment" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" BorderThickness="1" Icon="{StaticResource Formula}" ResizeMode="CanMinimize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#80c8d8"/>
+            <GradientStop Color="#3a8fb9" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--Logo-->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+            <fa:ImageAwesome Width="20" Height="20" Icon="ClockOutline" Foreground="FloralWhite"/>
+            <TextBlock Text="BitClock" Foreground="FloralWhite" FontSize="24" Margin="5,0,0,0" VerticalAlignment="Center" FontFamily="Segoe UI"/>
+        </StackPanel>
+        
+        <!--Headers-->
+        <StackPanel Grid.Row="1" Width="768" Height="Auto" Margin="10" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <Label Content="Current Difficulty Adjustment" Width="768" Height="50" FontSize="30" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <TextBlock Text="Press the button to get the current information of the network difficulty" FontSize="16" HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!--Main Content-->
+        <Border Grid.Row="2" Width="1024" Height="330" BorderThickness="5.5" CornerRadius="4">
+            <Border.BorderBrush>
+                <RadialGradientBrush>
+                    <GradientStop Color="#3a8fb9" Offset="1"/>
+                    <GradientStop Color="#80c8d8" Offset="0.31"/>
+                </RadialGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#80c8d8" Offset="0.2"/>
+                        <GradientStop Color="#3a8fb9" Offset="0.4"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <StackPanel Grid.Row="0" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Progress Percent:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="ProgressPercentText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Difficulty Change:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="DifficultyChangeText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Estimated Retarget Date:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="EstimatedRetargetText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Remaining Blocks:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="RemainingBlocksText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="4" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Remaining Time:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="RemainingTimeText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="5" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Previous Retarget:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="PreviousRetargetText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="6" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Next Retarget Height:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="NextRetargetHeightText" Text="NA" FontSize="16" FontWeight="Light" FontFamily="Constantia" Height="30" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="7" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="Time Average:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="TimeAvgText" Text="NA" FontSize="16" FontWeight="Light" Height="30" FontFamily="Constantia" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+                <StackPanel Grid.Row="8" Width="Auto" Height="Auto" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="TimeOffset:" FontSize="18" FontWeight="SemiBold" Height="30" Margin="5 5 0 0" FontFamily="Constantia"/>
+                    <TextBlock x:Name="TimeOffsetText" Text="NA" FontSize="16" FontWeight="Light" Height="30" FontFamily="Constantia" Margin="15 5 0 0" Width="855"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!--Buttons-->
+        <DockPanel Grid.Row="3" LastChildFill="False" Height="60" Width="1024" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <UniformGrid Columns="3" Rows="1" Height="60" Width="1024" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Content="Get Data" FontSize="16" FontWeight="Bold" Style="{StaticResource ButtonRound}" FontFamily="Times New Roman" Height="40" BorderThickness="1" Width="140" Click="Data_Click">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Color="#FF30C1D4" Offset="0.2"/>
+                            <GradientStop Color="#FF4C93CA" Offset="0.463"/>
+                            <GradientStop Color="#FF2C70BD" Offset="0.8"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="Clear Data" FontSize="16" FontWeight="Bold" Style="{StaticResource ButtonRound}" FontFamily="Times New Roman" Height="40" BorderThickness="1" Width="140" Click="Clear_Click">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Color="#FF30C1D4" Offset="0.2"/>
+                            <GradientStop Color="#FF4C93CA" Offset="0.463"/>
+                            <GradientStop Color="#FF2C70BD" Offset="0.8"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button Content="Return To Main Window" FontSize="12" FontWeight="Bold" Style="{StaticResource ButtonRound}" FontFamily="Times New Roman" Height="40" BorderThickness="1" Width="140" Click="Return_Click">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Color="#FF30C1D4" Offset="0.2"/>
+                            <GradientStop Color="#FF4C93CA" Offset="0.463"/>
+                            <GradientStop Color="#FF2C70BD" Offset="0.8"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </UniformGrid>
+        </DockPanel>
+        
+        <!--Genesis Block Easter Egg-->
+        <StackPanel Grid.Row="4" Margin="10" Width="1024" Orientation="Vertical" VerticalAlignment="Center">
+            <Image Source="{StaticResource Cancellor}" Width="330" Height="120"/>
+        </StackPanel>
+    </Grid>
+</Window>
