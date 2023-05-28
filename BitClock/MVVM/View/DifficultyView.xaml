@@ -1,0 +1,599 @@
+﻿<UserControl
+    x:Class="BitClock.MVVM.View.DifficultyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Bitcoin="clr-namespace:BitClock.Bitcoin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:local="clr-namespace:BitClock.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.DataContext>
+        <Bitcoin:BitcoinNetwork />
+    </UserControl.DataContext>
+    <StackPanel>
+        <!--  Home Panel  -->
+        <StackPanel Margin="15,0,0,0" Orientation="Horizontal">
+            <fa:ImageAwesome
+                Width="30"
+                Height="30"
+                Margin="0,5,10,0"
+                VerticalAlignment="Top"
+                Foreground="#e7fafd"
+                Icon="Connectdevelop" />
+            <TextBlock
+                Margin="0,0,0,20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontFamily="The Font"
+                FontSize="32"
+                Foreground="White"
+                Text="Network" />
+        </StackPanel>
+
+        <StackPanel
+            Margin="0,0,0,10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Border
+                Width="450"
+                Height="40"
+                Background="#d1e071"
+                BorderThickness="0"
+                CornerRadius="10">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="Stencil"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        Text="Bitcoin's Supply:" />
+                    <fa:ImageAwesome
+                        Width="8"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Top"
+                        Foreground="#252018"
+                        Icon="InfoCircle">
+                        <fa:ImageAwesome.ToolTip>
+                            <TextBlock Text="Returns the current supply of Bitcoin." />
+                        </fa:ImageAwesome.ToolTip>
+                    </fa:ImageAwesome>
+                    <TextBlock
+                        x:Name="CoinSupplyText"
+                        Margin="0,0,60,0"
+                        FontSize="16"
+                        Text="{Binding SupplyOfCoins.Supply, Mode=OneWay}" />
+
+                </StackPanel>
+            </Border>
+            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">
+                <Border
+                    Width="110"
+                    Height="25"
+                    Background="#dee9fd"
+                    BorderThickness="0"
+                    CornerRadius="10">
+                    <Button
+                        x:Name="GetCoinSupplyButton"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding GetCoinSupplyCommand}">
+                        <TextBlock
+                            FontFamily="Times New Roman"
+                            FontSize="14"
+                            Foreground="Black"
+                            Text="Get Coin Supply" />
+                    </Button>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel
+            Margin="0,0,0,10"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Border
+                Width="450"
+                Height="40"
+                Background="#d1e071"
+                BorderThickness="0"
+                CornerRadius="10">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="Stencil"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        Text="Transactions' Volume:" />
+                    <fa:ImageAwesome
+                        Width="8"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Top"
+                        Foreground="#252018"
+                        Icon="InfoCircle">
+                        <fa:ImageAwesome.ToolTip>
+                            <TextBlock Text=" Returns total output of all transactions over the last 24hrs." />
+                        </fa:ImageAwesome.ToolTip>
+                    </fa:ImageAwesome>
+                    <TextBlock
+                        x:Name="TransactionVolumeText"
+                        Margin="0,0,60,0"
+                        FontSize="16"
+                        Text="{Binding DayTransactionsVolume.H24}" />
+
+                </StackPanel>
+            </Border>
+            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">
+                <Border
+                    Width="110"
+                    Height="25"
+                    Background="#dee9fd"
+                    BorderThickness="0"
+                    CornerRadius="10">
+                    <Button
+                        x:Name="GetTxtVolumeButton"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding GetTxtVolumeCommand}">
+                        <TextBlock
+                            FontFamily="Times New Roman"
+                            FontSize="15"
+                            Foreground="Black"
+                            Text="Get Txt Volume" />
+                    </Button>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Margin" Value="5,5,0,10" />
+                    <Setter Property="CornerRadius" Value="20" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </StackPanel.Resources>
+
+            <Border
+                Width="450"
+                Height="270"
+                Margin="0,0,10,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,2" EndPoint="0,0">
+                        <GradientStop Offset="1.0" Color="#FF8EDC60" />
+                        <GradientStop Offset="0.0" Color="#FF46593A" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Vertical">
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="Halving:"
+                        FontFamily="Stencil"
+                        FontSize="22"
+                        FontWeight="SemiBold" />
+
+                    <!--  Next Halving Index  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Next Halving Index:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="19"
+                            FontWeight="Light" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="The number of the next halving (i.e. Fourth, Fith, Sixt, and so on.)" />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            x:Name="NextHalvingIndexText"
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.NextHalvingIndex, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Next Halving Block  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Next Halving Block:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="19"
+                            FontWeight="Medium" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="The Block where the halving might occur." />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.NextHalvingBlock, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Next Block Subsidy  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Next Halving Subsidy:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="19"
+                            FontWeight="Medium" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="The block subsidy after this halving" />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.NextHalvingSubsidy, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Blocks Until Next Halving  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Blocks Until Next Halving:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="19"
+                            FontWeight="Medium" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="Remaining blocks until this halving " />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.BlocksUntilNextHalving, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Time Until Next Halving  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Time Until Next Halving:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="16"
+                            FontWeight="Medium" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="Time until the next halving " />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.TimeUntilNextHalving, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Next Halving Date  -->
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            Content="Next Halving Estimated Date:"
+                            FontFamily="Copperplate Gothic Bold"
+                            FontSize="16"
+                            FontWeight="Medium" />
+                        <fa:ImageAwesome
+                            Width="10"
+                            Margin="0,0,5,0"
+                            VerticalAlignment="Top"
+                            Foreground="#252018"
+                            Icon="InfoCircle">
+                            <fa:ImageAwesome.ToolTip>
+                                <TextBlock Text="The estimated date where this halving might occur. " />
+                            </fa:ImageAwesome.ToolTip>
+                        </fa:ImageAwesome>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontFamily="Times New Roman"
+                            FontSize="16"
+                            Text="{Binding HalvingData.NextHalvingEstimatedDate, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <Border
+                        Width="110"
+                        Height="27"
+                        Background="#dee9fd"
+                        BorderThickness="0"
+                        CornerRadius="10">
+                        <Button
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding GetHalvingDataCommand}">
+                            <Button.Content>
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                    <fa:ImageAwesome
+                                        Width="10"
+                                        Margin="1"
+                                        Icon="HourglassHalf" />
+                                    <TextBlock
+                                        FontFamily="Times New Roman"
+                                        FontSize="15"
+                                        Text="Halving Data" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Border>
+            <Border
+                Width="300"
+                Height="555"
+                Margin="0,0,10,10">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                        <GradientStop Offset="0.0" Color="#FFF4E367" />
+                        <GradientStop Offset="1.0" Color="#FFEBF89B" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Vertical">
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="Network Hashrate:"
+                        FontFamily="Stencil"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+                    <!--  1 Day Change  -->
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="One Day Ago:"
+                        FontFamily="Stencil"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+
+                    <Border
+                        Width="260"
+                        Height="50"
+                        Background="#f7bc97">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneDay.Value}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneDay.UnitAbbreviation}" />
+                            <Label
+                                VerticalAlignment="Center"
+                                Content="Unit Exponent:"
+                                FontFamily="Times New Roman"
+                                FontSize="14" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneDay.UnitExponent}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  7 Day Change  -->
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="A Week Ago:"
+                        FontFamily="Stencil"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+
+                    <Border
+                        Width="260"
+                        Height="50"
+                        Background="#f7bc97">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.SevenDays.Value}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.SevenDays.UnitAbbreviation}" />
+                            <Label
+                                VerticalAlignment="Center"
+                                Content="Unit Exponent:"
+                                FontFamily="Times New Roman"
+                                FontSize="14" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.SevenDays.UnitExponent}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  30 Day Change  -->
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="A Month Ago:"
+                        FontFamily="Stencil"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+
+                    <Border
+                        Width="260"
+                        Height="50"
+                        Background="#f7bc97">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneMonth.Value}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneMonth.UnitAbbreviation}" />
+                            <Label
+                                VerticalAlignment="Center"
+                                Content="Unit Exponent:"
+                                FontFamily="Times New Roman"
+                                FontSize="14" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneMonth.UnitExponent}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  90 Day Change  -->
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="3 Months Ago:"
+                        FontFamily="Stencil"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+
+                    <Border
+                        Width="260"
+                        Height="50"
+                        Background="#f7bc97">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.ThreeMonths.Value}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.ThreeMonths.UnitAbbreviation}" />
+                            <Label
+                                VerticalAlignment="Center"
+                                Content="Unit Exponent:"
+                                FontFamily="Times New Roman"
+                                FontSize="14" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.ThreeMonths.UnitExponent}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  365 Day Change  -->
+                    <Label
+                        HorizontalAlignment="Center"
+                        Content="One Year Ago:"
+                        FontFamily="Stencil"
+                        FontSize="17"
+                        FontWeight="SemiBold"
+                        Foreground="Black" />
+
+                    <Border
+                        Width="260"
+                        Height="50"
+                        Background="#f7bc97">
+                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneYear.Value}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneYear.UnitAbbreviation}" />
+                            <Label
+                                VerticalAlignment="Center"
+                                Content="Unit Exponent:"
+                                FontFamily="Times New Roman"
+                                FontSize="14" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="Times New Roman"
+                                FontSize="15"
+                                Text="{Binding HashrateData.OneYear.UnitExponent}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  button  -->
+                    <Border
+                        Width="110"
+                        Height="27"
+                        Background="#dee9fd"
+                        BorderThickness="0"
+                        CornerRadius="10">
+                        <Button
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding GetHashrateCommand}"
+                            Content="Get Hashrate"
+                            FontFamily="Times New Roman"
+                            FontSize="16" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

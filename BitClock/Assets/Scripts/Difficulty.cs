@@ -6,25 +6,13 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BitClock.Bitcoin
 {
     public struct Difficulty
     {
-        public Difficulty(string args)
-        {
-            ProgressPercent = 0;
-            DifficultyChange = 0;
-            EstimatedRetargetDate = 0;
-            RemainingBlocks = 0;
-            RemainingTime = 0;
-            PreviousRetarget = 0;
-            NextRetargetHeight = 0;
-            TimeAvg = 0;
-            TimeOffset = 0;
-        }
-
         public double ProgressPercent { get; set; }
         public double DifficultyChange { get; set; }
         public long EstimatedRetargetDate { get; set; }
@@ -39,9 +27,11 @@ namespace BitClock.Bitcoin
         /// Sends an API request to Mempool.space and retrieves the current data on the network difficulty adjustment.
         /// </summary>
         /// <returns>Returns a struct with the data retrieved from the API request.</returns>
-        public static async UniTask<Difficulty> GetDifficulty()
+        public static async UniTask<Difficulty> GetDifficulty(CancellationToken cancellationToken = default)
         {
-            Difficulty difficulty = new Difficulty("args");
+            if (cancellationToken.IsCancellationRequested) return default;
+
+            Difficulty difficulty = new Difficulty();
             try
             {
                 using (var client = new HttpClient())
@@ -56,15 +46,17 @@ namespace BitClock.Bitcoin
                         // Serialize the HTTP content to a string
                         string responseString = await message.Content.ReadAsStringAsync();
                         difficulty = JsonConvert.DeserializeObject<Difficulty>(responseString);
+                        client.Dispose();
                         return difficulty;
                     }
+                    client.Dispose();
+                    return difficulty;
                 }
             }
             catch (Exception)
             {
                 return difficulty;
             }
-            return difficulty;
         }
     }
 }

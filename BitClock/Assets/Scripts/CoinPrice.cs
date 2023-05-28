@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BitClock.Bitcoin
@@ -25,8 +26,10 @@ namespace BitClock.Bitcoin
         /// Send a request to bitcoinexplorer.org and 
         /// returns the price of 1 BTC, in USD, EUR, GBP, and XAU
         /// </summary>
-        public static async UniTask<CoinPrice> GetCoinPrice()
+        public static async UniTask<CoinPrice> GetCoinPrice(CancellationToken cancellationToken = default)
         {
+            if (cancellationToken.IsCancellationRequested) return default;
+
             CoinPrice priceToReturn = new CoinPrice();
             try
             {
@@ -42,28 +45,34 @@ namespace BitClock.Bitcoin
                         // Serialize the HTTP content to a string
                         string responseString = await message.Content.ReadAsStringAsync();
                         priceToReturn = JsonConvert.DeserializeObject<CoinPrice>(responseString);
-                        // Get the Market cap
-                        priceToReturn.Marketcap = await GetMarketCap();
-                        // Get the sats price
-                        priceToReturn.Sats = await GetPriceSats();
                         
+                        // Get the Market cap
+                        priceToReturn.Marketcap = await GetMarketCap(cancellationToken);
+                        
+                        // Get the sats price
+                        priceToReturn.Sats = await GetPriceSats(cancellationToken);
+                        
+                        client.Dispose();
                         return priceToReturn;
                     }
+                    client.Dispose();
+                    return priceToReturn;
                 }
             }
             catch (Exception)
             {
                 return priceToReturn;
             }
-            return priceToReturn;
         }
 
         /// <summary>
         /// Sends a request to bitcoinexplorer.org and 
         /// returns the market cap of Bitcoin, in USD, EUR, GBP, XAU
         /// </summary>
-        public static async UniTask<MarketCap> GetMarketCap()
+        public static async UniTask<MarketCap> GetMarketCap(CancellationToken cancellationToken = default)
         {
+            if (cancellationToken.IsCancellationRequested) return default;
+
             MarketCap market = new MarketCap();
             try
             {
@@ -76,19 +85,23 @@ namespace BitClock.Bitcoin
                     {
                         string responseString = await response.Content.ReadAsStringAsync();
                         market = JsonConvert.DeserializeObject<MarketCap>(responseString);
+                        client.Dispose();
                         return market;
                     }
+                    client.Dispose();
+                    return market;
                 }
             }
             catch (Exception)
             {
                 return market;
             }
-            return market;
         }
 
-        public static async UniTask<SatsPrice> GetPriceSats()
+        public static async UniTask<SatsPrice> GetPriceSats(CancellationToken cancellationToken = default)
         {
+            if (cancellationToken.IsCancellationRequested) return default;
+
             SatsPrice sats = new SatsPrice();
             try
             {
@@ -101,15 +114,17 @@ namespace BitClock.Bitcoin
                     {
                         string responseString = await response.Content.ReadAsStringAsync();
                         sats = JsonConvert.DeserializeObject<SatsPrice>(responseString);
+                        client.Dispose();
                         return sats;
                     }
+                    client.Dispose();
+                    return sats;
                 }
             }
             catch (Exception)
             {
                 return sats;
             }
-            return sats;
         }
 
         /// <summary>

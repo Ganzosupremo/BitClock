@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace BitClock.Bitcoin
 {
@@ -20,18 +21,17 @@ namespace BitClock.Bitcoin
             Timestamp = 0;
             Size = 0;
             Weight = 0;
-            Previousblockhash = string.Empty;
+            PreviousBlockHash = string.Empty;
             Nonce = 0;
             Difficulty = 0;
         }
 
         public string Id { get; set; }
-        public long Reward { get; set; }
         public long Height { get; set; }
         public long Timestamp { get; set; }
         public int Size { get; set; }
         public int Weight { get; set; }
-        public string Previousblockhash { get; set; }
+        public string PreviousBlockHash { get; set; }
         public long Nonce { get; set; }
         public long Difficulty { get; set; }
 
@@ -39,8 +39,10 @@ namespace BitClock.Bitcoin
         /// Sends an API request to Mempool.space and retrieves the current blockheigth.
         /// </summary>
         /// <returns>Returns the current block heigth as an int</returns>
-        public static async UniTask<int> GetBlockHeight()
+        public static async UniTask<int> GetBlockHeight(CancellationToken cancellationToken = default)
         {
+            if (cancellationToken.IsCancellationRequested) return 0;
+
             try
             {
                 using (var client = new HttpClient())
@@ -54,9 +56,11 @@ namespace BitClock.Bitcoin
                     {
                         // Serialize the HTTP content to a string
                         string ResponseString = await message.Content.ReadAsStringAsync();
-
+                        
+                        client.Dispose();
                         return Convert.ToInt32(ResponseString);
                     }
+                    client.Dispose();
                 }
             }
             catch (Exception)
@@ -72,8 +76,10 @@ namespace BitClock.Bitcoin
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static async UniTask<BitBlock> GetBlockAsync(string url)
+        public static async UniTask<BitBlock> GetBlockAsync(string url, CancellationToken cancellationToken = default)
         {
+            if (cancellationToken.IsCancellationRequested) return null;
+
             BitBlock blockToReturn = new BitBlock();
             try
             {
@@ -89,8 +95,10 @@ namespace BitClock.Bitcoin
                         // Serialize the HTTP content to a string
                         string ResponseString = await message.Content.ReadAsStringAsync();
                         blockToReturn = JsonConvert.DeserializeObject<BitBlock>(ResponseString);
+                        client.Dispose();
                         return blockToReturn;
                     }
+                    client.Dispose();
                     return blockToReturn;
                 }
             }
@@ -105,9 +113,11 @@ namespace BitClock.Bitcoin
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static async UniTask<string> GetTipHash(string url)
+        public static async UniTask<string> GetTipHash(string url, CancellationToken cancellationToken = default)
         {
-            string stringToReturn = "";
+            if (cancellationToken.IsCancellationRequested) return null;
+
+            string stringToReturn = "Could not Send a Request...";
             try
             {
                 using (var client = new HttpClient())
@@ -121,9 +131,11 @@ namespace BitClock.Bitcoin
                     {
                         // Serialize the HTTP content to a string
                         string ResponseString = await message.Content.ReadAsStringAsync();
-                        //stringToReturn = JsonConvert.DeserializeAnonymousType(ResponseString, blockToReturn);
+
+                        client.Dispose();
                         return ResponseString;
                     }
+                    client.Dispose();
                     return stringToReturn;
                 }
             }

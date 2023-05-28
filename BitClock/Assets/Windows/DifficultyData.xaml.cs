@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +21,8 @@ namespace BitClock
     /// </summary>
     public partial class DifficultyData : Window
     {
-        private MainWindow _MainWindow;
         private readonly List<TextBlock> _TextsList = new List<TextBlock>();
+        private CancellationTokenSource _CancellationTokenSource = new CancellationTokenSource();
 
         public DifficultyData()
         {
@@ -30,6 +31,22 @@ namespace BitClock
             PopulateList();
 
             SendAPIRequest();
+
+            Deactivated += DifficultyData_Deactivated;
+            Activated += DifficultyData_Activated;
+        }
+
+        private void DifficultyData_Activated(object sender, EventArgs e)
+        {
+            _CancellationTokenSource = new CancellationTokenSource();
+            Deactivated += DifficultyData_Deactivated;
+        }
+
+        private void DifficultyData_Deactivated(object sender, EventArgs e)
+        {
+            _CancellationTokenSource.Cancel();
+            //_CancellationTokenSource.Dispose();
+            Deactivated -= DifficultyData_Deactivated;
         }
 
         private void Clear_Click(object sender, RoutedEventArgs e)
@@ -47,14 +64,15 @@ namespace BitClock
 
         private void Return_Click(object sender, RoutedEventArgs e)
         {
-            _MainWindow = new MainWindow();
-            _MainWindow.Show();
+            //MainWindow mainWindow = new MainWindow();
+            //mainWindow.Show();
+            //_CancellationTokenSource.Dispose();
             this.Close();
         }
 
         private async void SendAPIRequest()
         {
-            Difficulty data = await Difficulty.GetDifficulty();
+            Difficulty data = await APIRequester.SendRequestAsync<Difficulty>("https://mempool.space/api/v1/difficulty-adjustment",  _CancellationTokenSource.Token);
 
             SetBlockTexts(data);
         }

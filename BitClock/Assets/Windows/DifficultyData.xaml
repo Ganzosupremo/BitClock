@@ -1,13 +1,13 @@
 ﻿<Window
-    x:Class="BitClock.PriceWindow"
+    x:Class="BitClock.DifficultyData"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="BTC Price. But Always Remember 1 BTC = 1 BTC. Always"
+    Title="Difficulty Adjustment"
     BorderThickness="1"
-    Icon="{StaticResource BitcoinIsTime}"
+    Icon="{StaticResource Formula}"
     ResizeMode="CanMinimize"
     SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
@@ -20,7 +20,7 @@
     </Window.Background>
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -50,7 +50,7 @@
         <!--  Headers  -->
         <StackPanel
             Grid.Row="1"
-            Width="1024"
+            Width="768"
             Height="Auto"
             Margin="10"
             HorizontalAlignment="Center"
@@ -59,26 +59,25 @@
             <Label
                 Width="768"
                 Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
                 HorizontalContentAlignment="Center"
-                Content="BTC Price"
-                FontFamily="Sitka Heading"
+                Content="Current Difficulty Adjustment"
+                FontFamily="Sitka Heading Semibold"
                 FontSize="30"
                 FontWeight="Bold" />
             <TextBlock
-                Width="988"
-                Height="32"
+                HorizontalAlignment="Center"
                 FontFamily="Sitka Text"
-                FontSize="17"
-                Text="You can get the BTC price in different fiat currencies, as well, the market cap and the price of 1 fiat unit in satoshis."
-                TextAlignment="Center" />
+                FontSize="16"
+                Text="Press the button to get the current information of the network difficulty" />
         </StackPanel>
 
         <!--  Main Content  -->
         <Border
             Grid.Row="2"
             Width="1024"
-            Height="400"
-            Margin="5"
+            Height="330"
             BorderThickness="5.5"
             CornerRadius="4">
             <Border.BorderBrush>
@@ -89,28 +88,33 @@
             </Border.BorderBrush>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="80" />
-                    <RowDefinition Height="80" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Grid.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="0.2" Color="#80c8d8" />
                         <GradientStop Offset="0.4" Color="#3a8fb9" />
                     </LinearGradientBrush>
                 </Grid.Background>
+
                 <StackPanel
                     Grid.Row="0"
-                    Grid.RowSpan="2"
                     Width="Auto"
-                    Height="45"
-                    Margin="20,5,0,0"
+                    Height="Auto"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Bottom"
                     Orientation="Horizontal">
                     <TextBlock
                         Height="30"
@@ -118,247 +122,206 @@
                         FontFamily="Constantia"
                         FontSize="18"
                         FontWeight="SemiBold"
-                        Text="Choose a shitcoin... I mean fiat Currency..." />
-                    <ComboBox
-                        x:Name="cmbCurrency"
-                        Grid.Row="0"
-                        Width="120"
+                        Text="Progress Percent:" />
+                    <TextBlock
+                        x:Name="ProgressPercentText"
+                        Width="844"
                         Height="30"
-                        Margin="20,0,0,0"
-                        VerticalContentAlignment="Top"
-                        BorderBrush="#FF15A8C5"
+                        Margin="15,5,0,0"
                         FontFamily="Constantia"
                         FontSize="16"
-                        MaxDropDownHeight="150"
-                        SelectionChanged="CmbCurrency_SelectionChanged">
-                        <ComboBox.Background>
-                            <LinearGradientBrush>
-                                <GradientStop Offset="0.2" Color="#80c8d8" />
-                                <GradientStop Offset="0.4" Color="#3a8fb9" />
-                            </LinearGradientBrush>
-                        </ComboBox.Background>
-                    </ComboBox>
-                    <TextBlock
-                        Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Constantia"
-                        FontSize="18"
-                        FontWeight="SemiBold"
-                        Text="Click The Button --&gt;" />
-                    <Button
-                        Width="120"
-                        Height="30"
-                        Margin="20,0,0,0"
-                        Click="Button_Click"
-                        Content="Click Me!"
-                        FontFamily="Constantia"
-                        FontSize="17"
-                        FontWeight="Bold"
-                        Style="{StaticResource ButtonRound}">
-                        <Button.Background>
-                            <LinearGradientBrush>
-                                <GradientStop Offset="0.4" Color="#80c8d8" />
-                                <GradientStop Offset="0.25" Color="#3a8fb9" />
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+                        FontWeight="Light"
+                        Text="NA" />
                 </StackPanel>
                 <StackPanel
                     Grid.Row="1"
                     Width="Auto"
-                    Height="40"
+                    Height="Auto"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Bottom"
                     Orientation="Horizontal">
                     <TextBlock
                         Height="30"
-                        Margin="20,5,0,0"
+                        Margin="5,5,0,0"
                         FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="BTC Price (In the selected fiat currency): " />
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Difficulty Change:" />
                     <TextBlock
-                        x:Name="PriceText"
+                        x:Name="DifficultyChangeText"
+                        Width="838"
                         Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
                         FontWeight="Light"
                         Text="NA" />
                 </StackPanel>
                 <StackPanel
                     Grid.Row="2"
                     Width="Auto"
-                    Height="40"
+                    Height="Auto"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Bottom"
                     Orientation="Horizontal">
                     <TextBlock
                         Height="30"
-                        Margin="20,5,0,0"
+                        Margin="5,5,0,0"
                         FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="BTC Marketcap: " />
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Estimated Retarget Date:" />
                     <TextBlock
-                        x:Name="MarketcapText"
+                        x:Name="EstimatedRetargetText"
+                        Width="782"
                         Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
                         FontWeight="Light"
                         Text="NA" />
                 </StackPanel>
                 <StackPanel
                     Grid.Row="3"
                     Width="Auto"
-                    Height="40"
+                    Height="Auto"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Bottom"
                     Orientation="Horizontal">
                     <TextBlock
-                        Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="Price of 1 selected fiat unit in Satoshis: " />
-                    <TextBlock
-                        x:Name="SatsText"
-                        Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
-                        FontWeight="Light"
-                        Text="NA" />
-                </StackPanel>
-                <!--  Quotes Text  -->
-                <StackPanel
-                    Grid.Row="4"
-                    Grid.RowSpan="2"
-                    Width="Auto"
-                    Height="80"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal">
-                    <TextBlock
-                        x:Name="QuoteHeader"
-                        Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="Quote: " />
-                </StackPanel>
-                <ScrollViewer Grid.Row="4" Height="80">
-                    <StackPanel
-                        Grid.RowSpan="2"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Orientation="Vertical">
-                        <TextBlock
-                            x:Name="QuoteText"
-                            Width="900"
-                            Margin="5,0,0,0"
-                            FontFamily="Consolas"
-                            FontSize="20"
-                            FontWeight="Light"
-                            Text="NA"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
-                </ScrollViewer>
-                <StackPanel
-                    Grid.Row="5"
-                    Width="Auto"
-                    Height="30"
-                    Margin="20,0,0,40"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <TextBlock
-                        x:Name="SpeakerHeader"
-                        Height="30"
-                        FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="Speaker: " />
-                    <TextBlock
-                        x:Name="SpeakerText"
-                        Height="30"
-                        FontFamily="Consolas"
-                        FontSize="20"
-                        FontWeight="Light"
-                        Text="NA" />
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="5"
-                    Width="Auto"
-                    Height="40"
-                    Margin="0,45,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <TextBlock
-                        x:Name="URLHeader"
-                        Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="URL: " />
-                    <TextBox
-                        x:Name="URLText"
-                        Width="766"
                         Height="30"
                         Margin="5,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
+                        FontFamily="Constantia"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Remaining Blocks:" />
+                    <TextBlock
+                        x:Name="RemainingBlocksText"
+                        Width="832"
+                        Height="30"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
                         FontWeight="Light"
-                        IsReadOnly="True"
-                        Text="NA">
-                        <TextBox.Background>
-                            <LinearGradientBrush>
-                                <GradientStop Offset="1" Color="#3a8fb9" />
-                            </LinearGradientBrush>
-                        </TextBox.Background>
-                    </TextBox>
+                        Text="NA" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="4"
+                    Width="Auto"
+                    Height="Auto"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Height="30"
+                        Margin="5,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Remaining Time:" />
+                    <TextBlock
+                        x:Name="RemainingTimeText"
+                        Width="841"
+                        Height="30"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Text="NA" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="5"
+                    Width="Auto"
+                    Height="Auto"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Height="30"
+                        Margin="5,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Previous Retarget:" />
+                    <TextBlock
+                        x:Name="PreviousRetargetText"
+                        Width="835"
+                        Height="30"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Text="NA" />
                 </StackPanel>
                 <StackPanel
                     Grid.Row="6"
                     Width="Auto"
-                    Height="60"
+                    Height="Auto"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
                     Orientation="Horizontal">
                     <TextBlock
-                        x:Name="DateHeader"
                         Height="30"
-                        Margin="20,5,0,0"
+                        Margin="5,5,0,0"
                         FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="Date: " />
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Next Retarget Height:" />
                     <TextBlock
-                        x:Name="DateText"
+                        x:Name="NextRetargetHeightText"
+                        Width="802"
                         Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
                         FontWeight="Light"
                         Text="NA" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="7"
+                    Width="Auto"
+                    Height="Auto"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
                     <TextBlock
-                        x:Name="IndexHeader"
                         Height="30"
-                        Margin="20,5,0,0"
+                        Margin="5,5,0,0"
                         FontFamily="Constantia"
-                        FontSize="22"
-                        FontWeight="Medium"
-                        Text="Quote Index: " />
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="Time Average:" />
                     <TextBlock
-                        x:Name="IndexText"
+                        x:Name="TimeAvgText"
+                        Width="875"
                         Height="30"
-                        Margin="20,5,0,0"
-                        FontFamily="Consolas"
-                        FontSize="20"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
+                        FontWeight="Light"
+                        Text="NA" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="8"
+                    Width="Auto"
+                    Height="Auto"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Height="30"
+                        Margin="5,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="TimeOffset:" />
+                    <TextBlock
+                        x:Name="TimeOffsetText"
+                        Width="890"
+                        Height="30"
+                        Margin="15,5,0,0"
+                        FontFamily="Constantia"
+                        FontSize="16"
                         FontWeight="Light"
                         Text="NA" />
                 </StackPanel>
@@ -378,17 +341,36 @@
                 Height="60"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Columns="2"
+                Columns="3"
                 Rows="1">
                 <Button
                     Width="140"
                     Height="40"
                     BorderThickness="1"
-                    Click="Fun_Click"
+                    Click="Data_Click"
                     ClickMode="Press"
-                    Content="Fun"
+                    Content="Get Data"
                     FontFamily="Times New Roman"
-                    FontSize="18"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Style="{StaticResource ButtonRound}">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                            <GradientStop Offset="0.2" Color="#FF30C1D4" />
+                            <GradientStop Offset="0.463" Color="#FF4C93CA" />
+                            <GradientStop Offset="0.8" Color="#FF2C70BD" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+                <Button
+                    Width="140"
+                    Height="40"
+                    BorderThickness="1"
+                    Click="Clear_Click"
+                    ClickMode="Press"
+                    Content="Clear Data"
+                    FontFamily="Times New Roman"
+                    FontSize="16"
                     FontWeight="Bold"
                     Style="{StaticResource ButtonRound}">
                     <Button.Background>
